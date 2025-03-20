@@ -6,10 +6,12 @@ const App = () => {
   const [products, setProducts] = useState([]);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  
 
+  const api_url = 'http://localhost:5000';
   // Fetch all products
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products')
+    axios.get(`${api_url}/api/products`)
       .then((response) => setProducts(response.data))
       .catch((error) => console.error(error));
   }, []);
@@ -20,7 +22,7 @@ const App = () => {
       alert('Please fill in all fields');
       return;
     }
-    axios.post('http://localhost:5000/api/products', { name, price })
+    axios.post(`${api_url}/api/products`, { name, price })
       .then((response) => {
         setProducts([...products, response.data]);
         setName('');
@@ -31,7 +33,7 @@ const App = () => {
 
   // Delete a product
   const deleteProduct = (id) => {
-    axios.delete(`http://localhost:5000/api/products/${id}`)
+    axios.delete(`${api_url}/api/products/${id}`)
       .then(() => {
         setProducts(products.filter((product) => product.id !== id));
       })
